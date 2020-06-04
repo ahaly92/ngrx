@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Customer } from '../customer.model';
 import { Store } from '@ngrx/store';
+import * as CustomerActions from '../state/customer.actions';
 
 @Component({
   selector: 'app-customer-list',
@@ -13,7 +14,7 @@ export class CustomerListComponent implements OnInit {
   constructor(private store: Store<any>) {}
 
   ngOnInit(): void {
-    this.store.dispatch({ type: 'LOAD CUSTOMERS' });
+    this.store.dispatch(new CustomerActions.LoadCustomers());
     this.store.subscribe(
       (state) => (this.customers = state.customers.customers)
     );

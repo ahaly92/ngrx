@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Customer } from '../customer.model';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-customer-list',
@@ -8,10 +8,14 @@ import { Customer } from '../customer.model';
   styleUrls: ['./customer-list.component.scss'],
 })
 export class CustomerListComponent implements OnInit {
-  customers$: Observable<Customer[]>;
-  error$: Observable<String>;
+  customers: Customer[];
 
-  constructor() {}
+  constructor(private store: Store<any>) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.store.dispatch({ type: 'LOAD CUSTOMERS' });
+    this.store.subscribe(
+      (state) => (this.customers = state.customers.customers)
+    );
+  }
 }
